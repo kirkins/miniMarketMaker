@@ -2,13 +2,11 @@ import React, { Component } from 'react';
 import Binance from 'binance-api-node';
 import _ from 'lodash';
 import './../App.css';
-import { Row, Col, Switch, Layout, Menu, Breadcrumb, Icon, AutoComplete, InputNumber, Button, Timeline, Slider, Divider, message } from 'antd';
+import { Row, Col, Switch, Layout, Menu, Breadcrumb, Icon, AutoComplete, Input, Button, Timeline, Slider, Divider, message } from 'antd';
 const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
-const APIKEY = '3oZbp22V7ktr483VQxnoS5Q5NkoCHWEqf011et3lhTahMNrEmJTr279tylNboPPz'
-const APISECRET = 'PhsXj5iVNgaxRwLDzYuCHmianQKnHau9mdSdNmuVYbBR9hJcvZ2JkUSUAnlAuPRL'
-const binance = Binance({apiKey: APIKEY, apiSecret: APISECRET, test: true})
 let eventLoop
+let binance
 
 class SwingTrade extends Component {
 
@@ -27,20 +25,30 @@ class SwingTrade extends Component {
   }
 
   constructor(props){
-      super(props);
-      this.onSelectPair = this.onSelectPair.bind(this);
-      this.makeTrade = this.makeTrade.bind(this);
-      this.onFilterPair = this.onFilterPair.bind(this);
-      this.profitPercentChange = this.profitPercentChange.bind(this);
-      this.changeQuantity = this.changeQuantity.bind(this);
-      this.changeBuy = this.changeBuy.bind(this);
-      this.changeBuyPrice = this.changeBuyPrice.bind(this);
-      this.changeSellPrice = this.changeSellPrice.bind(this);
-      this.checkOrder = this.checkOrder.bind(this);
-      this.checkPrice = this.checkPrice.bind(this);
+    super(props);
+    this.onSelectPair = this.onSelectPair.bind(this);
+    this.makeTrade = this.makeTrade.bind(this);
+    this.onFilterPair = this.onFilterPair.bind(this);
+    this.profitPercentChange = this.profitPercentChange.bind(this);
+    this.changeQuantity = this.changeQuantity.bind(this);
+    this.changeBuy = this.changeBuy.bind(this);
+    this.changeBuyPrice = this.changeBuyPrice.bind(this);
+    this.changeSellPrice = this.changeSellPrice.bind(this);
+    this.checkOrder = this.checkOrder.bind(this);
+    this.checkPrice = this.checkPrice.bind(this);
   }
 
   componentWillMount() {
+    if(!localStorage.getItem("binance-key") 
+        || localStorage.getItem === ""
+        || !localStorage.getItem("binance-secret")
+        || localStorage.getItem === "") {
+      this.props.history.push('/settings')
+    } else {
+      const APIKEY = localStorage.getItem("binance-key");
+      const APISECRET = localStorage.getItem("binance-secret");
+      binance = Binance({apiKey: APIKEY, apiSecret: APISECRET, test: true})
+    }
     let comp = this
     binance.exchangeInfo().then(results => {
       var symbols = _.map(results.symbols, 'symbol')
@@ -76,23 +84,20 @@ class SwingTrade extends Component {
     });
   }
 
-  changeSellPrice(value) {
+  changeSellPrice = e =>
     this.setState({
-      sellPrice: value,
-    });
-  }
+      sellPrice: e.target.value,
+  });
 
-  changeBuyPrice(value) {
+  changeBuyPrice = e =>
     this.setState({
-      buyPrice: value,
-    });
-  }
+      buyPrice: e.target.value,
+  });
 
-  changeQuantity(value) {
+  changeQuantity = e =>
     this.setState({
-      quantity: value,
-    });
-  }
+      quantity: e.target.value,
+  });
 
   changeBuy() {
     this.setState({ buy: !this.state.buy})
@@ -181,18 +186,15 @@ class SwingTrade extends Component {
               onSelect={this.onSelectPair}
               onSearch={this.onFilterPair}
             />
-            <InputNumber
-              min={0}
+            <Input
               value={this.state.quantity}
               onChange={this.changeQuantity}
             />
-            <InputNumber
-              min={0}
+            <Input
               value={this.state.buyPrice}
               onChange={this.changeBuyPrice}
             />
-            <InputNumber
-              min={0}
+            <Input
               value={this.state.sellPrice}
               onChange={this.changeSellPrice}
             />

@@ -18,12 +18,27 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "electron-dev": "concurrently \"BROWSER=none yarn start\" \"wait-on http://localhost:3000 && electron .\""
+    "electron-dev": "concurrently \"BROWSER=none yarn start\" \"wait-on http://localhost:3000 && electron .\"",
+    "preelectron-pack": "yarn build",
+    "electron-pack": "build — em.main=build/electron.js",
+    "windows-pack": "build — em.main=build/electron.js --win --ia32 --x64"
   },
   "devDependencies": {
     "concurrently": "^3.6.0",
     "electron": "^2.0.2",
     "electron-builder": "^20.15.1",
+    "electron-packager": "^12.1.0",
     "wait-on": "^2.1.0"
-  }
+  },
+  "build": {
+    "appId": "com.miniMarketMaker",
+    "files": [
+      "build/**/*",
+      "node_modules/**/*"
+    ],
+    "directories": {
+      "buildResources": "assets"
+    }
+  },
+  "homepage": "./"
 }
