@@ -171,7 +171,7 @@ class SwingTrade extends Component {
         <Content style={{ background: '#fff', padding: 24, margin: 0, minHeight: 280 }}>
           <h3>Create Swing Trade</h3>
           <p>symbol: { this.state.selectedPair }</p>
-          <p>price: <span class={this.state.priceColor}>{ this.state.marketPrice }</span></p>
+          <p>price: <span className={this.state.priceColor}>{ this.state.marketPrice }</span></p>
           <Slider
             min={0.001}
             max={0.08}
