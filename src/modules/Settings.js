@@ -50,13 +50,16 @@ class Settings extends Component {
         </Breadcrumb>
         <Content style={{ background: '#fff', padding: 24, margin: 0, minHeight: 280 }}>
           <h3>Settings</h3>
+          <p>You must enter Binance API info for this app to work correctly</p>
           <Input
             value={this.state.apiKey}
             onChange={this.onUpdateKey}
+            placeholder="Binance API Key"
           />
           <Input
             value={this.state.apiSecret}
             onChange={this.onUpdateSecret}
+            placeholder="Binance API Secret"
           />
           <Button onClick={this.onSave}>Save</Button>
         </Content>
