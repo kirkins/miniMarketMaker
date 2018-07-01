@@ -1,6 +1,6 @@
 # Mini-Market-Maker
 
-An example GUI application for working with the Binance API.
+An example GUI application for working with the [Binance](https://www.binance.com/?ref=21009719) API.
 
 Uses React, Electron, and AntD.
 
