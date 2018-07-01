@@ -60,7 +60,7 @@ class SwingTrade extends Component {
 
   onFilterPair(value) {
     this.setState({filteredPairs: _.filter(this.state.pairs, function(pair) {
-        return pair.indexOf(value) >= 0;
+        return pair.indexOf(value.toUpperCase()) >= 0;
     })})
   }
 
