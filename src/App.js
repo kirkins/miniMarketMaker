@@ -24,7 +24,6 @@ class App extends Component {
             <Menu
               theme="dark"
               mode="horizontal"
-              defaultSelectedKeys={['2']}
               style={{ lineHeight: '64px' }}
             >
               <Menu.Item key="1"><Link to="/swing">Trade</Link></Menu.Item>
