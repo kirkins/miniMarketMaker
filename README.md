@@ -2,6 +2,7 @@
 
 An example GUI application for working with the Binance API.
 
+Uses React, Electron, and AntD.
 
 To start run:
 
