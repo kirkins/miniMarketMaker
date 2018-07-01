@@ -1,5 +1,10 @@
 {
-  "name": "my-app",
+  "name": "Mini-Market-Maker",
+  "description": "Example GUI using the Binance API for tradingMini-Market-Maker",
+  "author": {
+    "name": "Philip Kirkbride",
+    "email": "kirkins@gmail.com"
+  },
   "version": "0.1.0",
   "main": "public/electron.js",
   "private": true,
