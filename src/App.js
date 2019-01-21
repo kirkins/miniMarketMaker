@@ -8,6 +8,7 @@ import {
   Link,
 } from 'react-router-dom'
 import SwingTrade from "./modules/SwingTrade"
+import Trades from "./modules/Trades"
 import Settings from "./modules/Settings"
 const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
@@ -27,6 +28,7 @@ class App extends Component {
               style={{ lineHeight: '64px' }}
             >
               <Menu.Item key="1"><Link to="/swing">Trade</Link></Menu.Item>
+              <Menu.Item key="3"><Link to="/trades">Testing</Link></Menu.Item>
               <Menu.Item key="2"><Link to="/settings">Settings</Link></Menu.Item>
             </Menu>
           </Header>
@@ -45,6 +47,7 @@ class App extends Component {
             </Sider>
             <Layout style={{ padding: '0 24px 24px' }}>
               <Route path="/swing" component={SwingTrade}/>
+              <Route path="/trades" component={Trades}/>
               <Route path="/settings" component={Settings}/>
             </Layout>
           </Layout>
