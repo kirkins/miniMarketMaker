@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Binance from 'binance-api-node';
 import _ from 'lodash';
-import './../App.css';
+import './SwingTrade.css';
 import { Row, Col, Switch, Layout, Menu, Icon, AutoComplete, Input, Button, Timeline, Divider, message } from 'antd';
 const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
