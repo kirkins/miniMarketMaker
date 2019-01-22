@@ -1,0 +1,6 @@
+.trade-container {
+  display: none;
+}
+.trade-container:nth-child(1) {
+  display: block;
+}

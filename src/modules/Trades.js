@@ -1,13 +1,17 @@
 import React, { Component } from 'react';
-import { Collapse } from 'antd';
+import { Collapse, Layout, Menu } from 'antd';
 import SwingTrade from "./SwingTrade"
+import './Trades.css';
 
+const { SubMenu } = Menu;
+const { Header, Content, Sider } = Layout;
 const Panel = Collapse.Panel;
 
 class Trades extends Component {
 
   state = {
-    trades: ["test"],
+    trades: [{}],
+    displayedTrade: 0,
   }
 
   constructor(props){
@@ -16,20 +20,34 @@ class Trades extends Component {
   }
 
   addTrade() {
-    this.setState({ trades: this.state.trades.concat("new")})
+    this.setState({ trades: this.state.trades.concat({})})
   }
 
   render() {
     return (
       <div>
-        {this.state.trades.map(function(name, index){
-          return <Collapse key={[index]}>
-                   <Panel header={"Trade #"+(index+1)} key={index}>
-                     <SwingTrade/>
-                   </Panel>
-                 </Collapse>
-        })}
-        <a href="#" onClick={this.addTrade}>Add</a>
+        <Layout>
+          <Sider width={200} style={{ background: '#fff' }}>
+            <Menu
+              mode="inline"
+              defaultSelectedKeys={['1']}
+              defaultOpenKeys={['sub1']}
+              style={{ height: '100%', borderRight: 0 }}
+            >
+              <SubMenu key="sub1" title={<span>Active Trades</span>}>
+                {this.state.trades.map(function(name, index){
+                  return <Menu.Item key={index}>Trade #{index}</Menu.Item>
+                })}
+              </SubMenu>
+            </Menu>
+          </Sider>
+          {this.state.trades.map(function(name, index){
+            return <div>
+                     <SwingTrade/> 
+                   </div>
+          })}
+          <a href="#" onClick={this.addTrade}>Add</a>
+        </Layout>
       </div>
     )
   }
