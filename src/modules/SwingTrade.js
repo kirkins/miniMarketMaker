@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Binance from 'binance-api-node';
 import _ from 'lodash';
 import './../App.css';
-import { Row, Col, Switch, Layout, Menu, Breadcrumb, Icon, AutoComplete, Input, Button, Timeline, Slider, Divider, message } from 'antd';
+import { Row, Col, Switch, Layout, Menu, Icon, AutoComplete, Input, Button, Timeline, Slider, Divider, message } from 'antd';
 const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
 let eventLoop
@@ -157,17 +157,11 @@ class SwingTrade extends Component {
     setTimeout(function() {
       comp.checkPrice()
     }, 5000)
-    //message.success("ran")
   }
 
   render() {
     return (
       <div>
-        <Breadcrumb style={{ margin: '15px 0' }}>
-          <Breadcrumb.Item>Home</Breadcrumb.Item>
-          <Breadcrumb.Item>List</Breadcrumb.Item>
-          <Breadcrumb.Item>App</Breadcrumb.Item>
-        </Breadcrumb>
         <Content style={{ background: '#fff', padding: 24, margin: 0, minHeight: 280 }}>
           <h3>Create Swing Trade</h3>
           <p>symbol: { this.state.selectedPair }</p>
@@ -189,14 +183,17 @@ class SwingTrade extends Component {
             <Input
               value={this.state.quantity}
               onChange={this.changeQuantity}
+              placeholder='Quantity'
             />
             <Input
               value={this.state.buyPrice}
               onChange={this.changeBuyPrice}
+              placeholder='Buy price'
             />
             <Input
               value={this.state.sellPrice}
               onChange={this.changeSellPrice}
+              placeholder='Sell price'
             />
             <Switch defaultChecked
               checked={this.state.buy}
