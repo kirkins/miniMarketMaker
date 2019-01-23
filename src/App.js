@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
 import './App.css';
-import { Modal, Button, Layout, Menu } from 'antd';
+import { Icon, Affix, Modal, Button, Layout, Menu } from 'antd';
 import Trades from "./modules/Trades"
 import Settings from "./modules/Settings"
 const { Header, Content } = Layout;
@@ -47,17 +47,11 @@ class App extends Component {
     return (
       <div className="App">
         <Layout style={{height:"100vh"}}>
-          <Header className="header">
-            <div className="logo" />
-            <Menu
-              theme="dark"
-              mode="horizontal"
-              style={{ lineHeight: '64px' }}
-            >
-              <Menu.Item key="1">Trades</Menu.Item>
-              <Menu.Item key="2" onClick={this.showModal}>Settings</Menu.Item>
-            </Menu>
-          </Header>
+          <Affix offsetTop={10}>
+            <Button style={{float: 'right', marginRight: '10px'}} onClick={this.showModal}>
+              <Icon type="setting" />Settings
+            </Button>
+          </Affix>
           <Layout style={{ padding: '0 24px 24px', height:"100vh"}}>
             <Modal
               title="Title"
