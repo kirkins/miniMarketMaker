@@ -47,8 +47,8 @@ class App extends Component {
     return (
       <div className="App">
         <Layout style={{height:"100vh"}}>
-          <Affix offsetTop={10}>
-            <Button style={{float: 'right', marginRight: '10px'}} onClick={this.showModal}>
+          <Affix style={{width: '100px', right: '30px', position: 'absolute'}} offsetTop={10}>
+            <Button onClick={this.showModal}>
               <Icon type="setting" />Settings
             </Button>
           </Affix>
