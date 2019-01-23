@@ -1,12 +1,7 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
 import './App.css';
-import { Layout, Menu } from 'antd';
-import {
-  BrowserRouter as Router,
-  Route,
-  Link,
-} from 'react-router-dom'
+import { Icon, Affix, Modal, Button, Layout, Menu } from 'antd';
 import Trades from "./modules/Trades"
 import Settings from "./modules/Settings"
 const { Header, Content } = Layout;
@@ -16,36 +11,61 @@ class App extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {height: props.height};
   }
 
-  componentWillMount(){
-    this.setState({height: window.innerHeight});
+  state = {
+    visible: false,
+    confirmLoading: false,
+  }
+
+  showModal = () => {
+    this.setState({
+      visible: true,
+    });
+  }
+
+  handleOk = () => {
+    this.setState({
+      confirmLoading: true,
+    });
+    setTimeout(() => {
+      this.setState({
+        visible: false,
+        confirmLoading: false,
+      });
+    }, 2000);
+  }
+
+  handleCancel = () => {
+    console.log('Clicked cancel button');
+    this.setState({
+      visible: false,
+    });
   }
 
   render() {
     return (
-      <Router>
-        <div className="App">
-          <Layout style={{height:"100vh"}}>
-            <Header className="header">
-              <div className="logo" />
-              <Menu
-                theme="dark"
-                mode="horizontal"
-                style={{ lineHeight: '64px' }}
-              >
-                <Menu.Item key="1"><Link to="/trades">Trades</Link></Menu.Item>
-                <Menu.Item key="2"><Link to="/settings">Settings</Link></Menu.Item>
-              </Menu>
-            </Header>
-            <Layout style={{ padding: '0 24px 24px', height:"100vh"}}>
-              <Route path="/trades" component={Trades}/>
-              <Route path="/settings" component={Settings}/>
-            </Layout>
+      <div className="App">
+        <Layout style={{height:"100vh"}}>
+          <Affix offsetTop={10}>
+            <Button style={{float: 'right', marginRight: '10px'}} onClick={this.showModal}>
+              <Icon type="setting" />Settings
+            </Button>
+          </Affix>
+          <Layout style={{ padding: '0 24px 24px', height:"100vh"}}>
+            <Modal
+              title="Title"
+              visible={this.state.visible}
+              onOk={this.handleOk}
+              confirmLoading={this.state.confirmLoading}
+              onCancel={this.handleCancel}
+            >
+              <Settings/>
+            </Modal>
+            <Trades/>
           </Layout>
-        </div>
-      </Router>
+        </Layout>
+      </div>
     );
   }
 }
