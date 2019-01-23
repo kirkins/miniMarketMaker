@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Collapse, Layout, Tabs, Icon} from 'antd';
+import { Button, Collapse, Layout, Tabs, Icon, message } from 'antd';
 import SwingTrade from "./SwingTrade"
 import './Trades.css';
 
@@ -9,36 +9,62 @@ let activeTrade;
 
 class Trades extends Component {
 
-  state = {
-    trades: [{}],
-    displayedTrade: 0,
-  }
-
-  constructor(props){
+  constructor(props) {
     super(props);
-    this.addTrade = this.addTrade.bind(this);
+    this.newTabIndex = 2;
+    const panes = [
+      { title: 'Trade 1', content: <SwingTrade/>, key: 'Trade 1' },
+    ];
+    this.state = {
+      activeKey: panes[0].key,
+      panes,
+    };
   }
 
-  addTrade() {
-    this.setState({ trades: this.state.trades.concat({})})
+  onChange = (activeKey) => {
+    this.setState({ activeKey });
+  }
+
+  onEdit = (targetKey, action) => {
+    this[action](targetKey);
+  }
+
+  add = () => {
+    const panes = this.state.panes;
+    const activeKey = `Trade ${this.newTabIndex++}`;
+    panes.push({ title: activeKey, content: <SwingTrade/>, key: activeKey });
+    this.setState({ panes, activeKey });
+  }
+
+  remove = (targetKey) => {
+    let activeKey = this.state.activeKey;
+    let lastIndex;
+    this.state.panes.forEach((pane, i) => {
+      if (pane.key === targetKey) {
+        lastIndex = i - 1;
+      }
+    });
+    const panes = this.state.panes.filter(pane => pane.key !== targetKey);
+    if (lastIndex >= 0 && activeKey === targetKey) {
+      activeKey = panes[lastIndex].key;
+    }
+    this.setState({ panes, activeKey });
+
   }
 
   render() {
     return (
-        <Layout style={{height:"100vh"}}>
-          <Tabs
-            defaultActiveKey="0"
-            tabPosition="left"
-            style={{height:"100vh"}}
-          >
-              {this.state.trades.map(function(name, index){
-                return <TabPane style={{height:"100vh"}} tab={<span><Icon type="stock" />Trade {index+1}</span>} key={index}>
-                         <SwingTrade class="swingTrade"/>
-                       </TabPane>
-              })}
-          </Tabs>
-          <a href="#" onClick={this.addTrade}>Add</a>
-        </Layout>
+      <div>
+        <Tabs
+          onChange={this.onChange}
+          activeKey={this.state.activeKey}
+          type="editable-card"
+          onEdit={this.onEdit}
+          tabPosition='left'
+        >
+          {this.state.panes.map(pane => <TabPane tab={pane.title} key={pane.key}>{pane.content}</TabPane>)}
+        </Tabs>
+      </div>
     )
   }
 
