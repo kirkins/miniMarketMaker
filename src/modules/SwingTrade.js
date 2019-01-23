@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import Binance from 'binance-api-node';
 import _ from 'lodash';
-import './../App.css';
-import { Row, Col, Switch, Layout, Menu, Breadcrumb, Icon, AutoComplete, Input, Button, Timeline, Slider, Divider, message } from 'antd';
+import './SwingTrade.css';
+import { Row, Col, Switch, Layout, Menu, Icon, AutoComplete, Input, Button, Timeline, Divider, message } from 'antd';
 const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
 let eventLoop
@@ -18,7 +18,6 @@ class SwingTrade extends Component {
     marketPrice: 0,
     buyPrice: 0,
     sellPrice: 0,
-    profitPercent: 0.004,
     quantity: 100,
     buy: false,
     lastOrder: "",
@@ -29,7 +28,6 @@ class SwingTrade extends Component {
     this.onSelectPair = this.onSelectPair.bind(this);
     this.makeTrade = this.makeTrade.bind(this);
     this.onFilterPair = this.onFilterPair.bind(this);
-    this.profitPercentChange = this.profitPercentChange.bind(this);
     this.changeQuantity = this.changeQuantity.bind(this);
     this.changeBuy = this.changeBuy.bind(this);
     this.changeBuyPrice = this.changeBuyPrice.bind(this);
@@ -69,19 +67,12 @@ class SwingTrade extends Component {
     this.setState({selectedPair: pair})
     binance.prices().then(results => {
       let priceNow = results[pair]
-      let sell = priceNow * (1 + comp.state.profitPercent)
+      let sell = priceNow
       comp.setState({selectedPair: pair, marketPrice: priceNow, buyPrice: priceNow, sellPrice: sell})
       setTimeout(function() {
         comp.checkPrice()
       })
     })
-  }
-
-  profitPercentChange(value) {
-    this.setState({
-      profitPercent: value,
-      sellPrice: this.state.marketPrice * (1 + value),
-    });
   }
 
   changeSellPrice = e =>
@@ -157,28 +148,15 @@ class SwingTrade extends Component {
     setTimeout(function() {
       comp.checkPrice()
     }, 5000)
-    //message.success("ran")
   }
 
   render() {
     return (
       <div>
-        <Breadcrumb style={{ margin: '15px 0' }}>
-          <Breadcrumb.Item>Home</Breadcrumb.Item>
-          <Breadcrumb.Item>List</Breadcrumb.Item>
-          <Breadcrumb.Item>App</Breadcrumb.Item>
-        </Breadcrumb>
-        <Content style={{ background: '#fff', padding: 24, margin: 0, minHeight: 280 }}>
+        <Content class="trade-container"> 
           <h3>Create Swing Trade</h3>
           <p>symbol: { this.state.selectedPair }</p>
           <p>price: <span className={this.state.priceColor}>{ this.state.marketPrice }</span></p>
-          <Slider
-            min={0.001}
-            max={0.08}
-            step={0.001}
-            defaultValue={0.004}
-            onChange={this.profitPercentChange}
-          />
           <Row>
             <AutoComplete
               dataSource={this.state.filteredPairs}
@@ -189,14 +167,17 @@ class SwingTrade extends Component {
             <Input
               value={this.state.quantity}
               onChange={this.changeQuantity}
+              placeholder='Quantity'
             />
             <Input
               value={this.state.buyPrice}
               onChange={this.changeBuyPrice}
+              placeholder='Buy price'
             />
             <Input
               value={this.state.sellPrice}
               onChange={this.changeSellPrice}
+              placeholder='Sell price'
             />
             <Switch defaultChecked
               checked={this.state.buy}

@@ -1,55 +1,50 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
 import './App.css';
-import { Row, Col, Layout, Menu, Breadcrumb, Icon, AutoComplete, InputNumber, Button, Timeline, Slider, Divider, message } from 'antd';
+import { Layout, Menu } from 'antd';
 import {
   BrowserRouter as Router,
   Route,
   Link,
 } from 'react-router-dom'
-import SwingTrade from "./modules/SwingTrade"
+import Trades from "./modules/Trades"
 import Settings from "./modules/Settings"
-const { SubMenu } = Menu;
-const { Header, Content, Sider } = Layout;
+const { Header, Content } = Layout;
 let eventLoop
 
 class App extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {height: props.height};
+  }
+
+  componentWillMount(){
+    this.setState({height: window.innerHeight});
+  }
+
   render() {
     return (
       <Router>
-      <div className="App">
-        <Layout>
-          <Header className="header">
-            <div className="logo" />
-            <Menu
-              theme="dark"
-              mode="horizontal"
-              style={{ lineHeight: '64px' }}
-            >
-              <Menu.Item key="1"><Link to="/swing">Trade</Link></Menu.Item>
-              <Menu.Item key="2"><Link to="/settings">Settings</Link></Menu.Item>
-            </Menu>
-          </Header>
-          <Layout>
-            <Sider width={200} style={{ background: '#fff' }}>
+        <div className="App">
+          <Layout style={{height:"100vh"}}>
+            <Header className="header">
+              <div className="logo" />
               <Menu
-                mode="inline"
-                defaultSelectedKeys={['1']}
-                defaultOpenKeys={['sub1']}
-                style={{ height: '100%', borderRight: 0 }}
+                theme="dark"
+                mode="horizontal"
+                style={{ lineHeight: '64px' }}
               >
-                <SubMenu key="sub1" title={<span>Active Trades</span>}>
-                  <Menu.Item key="1">Trade #1</Menu.Item>
-                </SubMenu>
+                <Menu.Item key="1"><Link to="/trades">Trades</Link></Menu.Item>
+                <Menu.Item key="2"><Link to="/settings">Settings</Link></Menu.Item>
               </Menu>
-            </Sider>
-            <Layout style={{ padding: '0 24px 24px' }}>
-              <Route path="/swing" component={SwingTrade}/>
+            </Header>
+            <Layout style={{ padding: '0 24px 24px', height:"100vh"}}>
+              <Route path="/trades" component={Trades}/>
               <Route path="/settings" component={Settings}/>
             </Layout>
           </Layout>
-        </Layout>
-      </div>
+        </div>
       </Router>
     );
   }
