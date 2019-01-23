@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Binance from 'binance-api-node';
 import _ from 'lodash';
 import './SwingTrade.css';
-import { Form, Switch, AutoComplete, Input, Button, Timeline, message } from 'antd';
+import { Form, Switch, AutoComplete, Input, Button, Timeline, message, Row, Col} from 'antd';
 let eventLoop
 let binance
 
@@ -151,11 +151,10 @@ class SwingTrade extends Component {
   render() {
     return (
       <div>
-        <Form class="trade-container">
-          <h3>Create Swing Trade</h3>
+        <Form class="trade-container" style={{ width: 300 }}>
           <p>symbol: { this.state.selectedPair }</p>
           <p>price: <span className={this.state.priceColor}>{ this.state.marketPrice }</span></p>
-          <Form.Item>
+          <Form.Item label="trading pair">
             <AutoComplete
               dataSource={this.state.filteredPairs}
               placeholder='trading pair'
@@ -163,31 +162,28 @@ class SwingTrade extends Component {
               onSearch={this.onFilterPair}
             />
           </Form.Item>
-          <Form.Item>
-          <Input
-            value={this.state.quantity}
-            onChange={this.changeQuantity}
-            placeholder='Quantity'
-            width='200px'
-          />
+          <Form.Item label="quantity">
+            <Input
+              value={this.state.quantity}
+              onChange={this.changeQuantity}
+              placeholder='Quantity'
+            />
           </Form.Item>
-          <Form.Item>
-          <Input
-            value={this.state.buyPrice}
-            onChange={this.changeBuyPrice}
-            placeholder='Buy price'
-            width='200px'
-          />
+          <Form.Item label="buy price">
+            <Input
+              value={this.state.buyPrice}
+              onChange={this.changeBuyPrice}
+              placeholder='Buy price'
+            />
           </Form.Item>
-          <Form.Item>
-          <Input
-            value={this.state.sellPrice}
-            onChange={this.changeSellPrice}
-            placeholder='Sell price'
-            width='200px'
-          />
+          <Form.Item label="sell price">
+            <Input
+              value={this.state.sellPrice}
+              onChange={this.changeSellPrice}
+              placeholder='Sell price'
+            />
           </Form.Item>
-          <Form.Item>
+          <Form.Item label="start on buy/sell">
             <Switch defaultChecked
               checked={this.state.buy}
               onChange={this.changeBuy}
@@ -197,18 +193,18 @@ class SwingTrade extends Component {
             type='primary'
             onClick={this.makeTrade}
           >
-            Start {this.state.buy ? "Buying" : "Selling"}
+            {this.state.buy ? "Start with Buy" : "Start with Sell"}
           </Button>
-          <Timeline>
-            {
-              this.state.orderHistory.map((order) => {
-                return <Timeline.Item color={order.side==="BUY" ? "green" : "red"}>
-                         Order #{order.orderId} {order.side} {order.symbol} {order.origQty} for {order.price}
-                       </Timeline.Item>
-              })
-            }
-          </Timeline>
         </Form>
+        <Timeline>
+          {
+            this.state.orderHistory.map((order) => {
+              return <Timeline.Item color={order.side==="BUY" ? "green" : "red"}>
+                       Order #{order.orderId} {order.side} {order.symbol} {order.origQty} for {order.price}
+                     </Timeline.Item>
+            })
+          }
+        </Timeline>
       </div>
     );
   }
