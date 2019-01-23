@@ -1,6 +1,6 @@
-.trade-container {
+.swingTrade {
   display: none;
 }
-.trade-container:nth-child(1) {
+.swingTrade:nth-of-type(1) {
   display: block;
 }

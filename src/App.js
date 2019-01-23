@@ -13,30 +13,38 @@ const { Header, Content } = Layout;
 let eventLoop
 
 class App extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {height: props.height};
+  }
+
+  componentWillMount(){
+    this.setState({height: window.innerHeight});
+  }
+
   render() {
     return (
       <Router>
-      <div className="App">
-        <Layout>
-          <Header className="header">
-            <div className="logo" />
-            <Menu
-              theme="dark"
-              mode="horizontal"
-              style={{ lineHeight: '64px' }}
-            >
-              <Menu.Item key="1"><Link to="/trades">Trades</Link></Menu.Item>
-              <Menu.Item key="2"><Link to="/settings">Settings</Link></Menu.Item>
-            </Menu>
-          </Header>
-          <Layout>
-            <Layout style={{ padding: '0 24px 24px' }}>
+        <div className="App">
+          <Layout style={{height:"100vh"}}>
+            <Header className="header">
+              <div className="logo" />
+              <Menu
+                theme="dark"
+                mode="horizontal"
+                style={{ lineHeight: '64px' }}
+              >
+                <Menu.Item key="1"><Link to="/trades">Trades</Link></Menu.Item>
+                <Menu.Item key="2"><Link to="/settings">Settings</Link></Menu.Item>
+              </Menu>
+            </Header>
+            <Layout style={{ padding: '0 24px 24px', height:"100vh"}}>
               <Route path="/trades" component={Trades}/>
               <Route path="/settings" component={Settings}/>
             </Layout>
           </Layout>
-        </Layout>
-      </div>
+        </div>
       </Router>
     );
   }

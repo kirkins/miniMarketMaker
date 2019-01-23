@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { Collapse, Layout, Menu } from 'antd';
+import { Collapse, Layout, Tabs, Icon} from 'antd';
 import SwingTrade from "./SwingTrade"
 import './Trades.css';
 
-const { SubMenu } = Menu;
-const { Header, Content, Sider } = Layout;
+const TabPane = Tabs.TabPane;
 const Panel = Collapse.Panel;
+let activeTrade;
 
 class Trades extends Component {
 
@@ -25,30 +25,20 @@ class Trades extends Component {
 
   render() {
     return (
-      <div>
-        <Layout>
-          <Sider width={200} style={{ background: '#fff' }}>
-            <Menu
-              mode="inline"
-              defaultSelectedKeys={['1']}
-              defaultOpenKeys={['sub1']}
-              style={{ height: '100%', borderRight: 0 }}
-            >
-              <SubMenu key="sub1" title={<span>Active Trades</span>}>
-                {this.state.trades.map(function(name, index){
-                  return <Menu.Item key={index}>Trade #{index}</Menu.Item>
-                })}
-              </SubMenu>
-            </Menu>
-          </Sider>
-          {this.state.trades.map(function(name, index){
-            return <div>
-                     <SwingTrade/> 
-                   </div>
-          })}
+        <Layout style={{height:"100vh"}}>
+          <Tabs
+            defaultActiveKey="0"
+            tabPosition="left"
+            style={{height:"100vh"}}
+          >
+              {this.state.trades.map(function(name, index){
+                return <TabPane style={{height:"100vh"}} tab={<span><Icon type="stock" />Trade {index+1}</span>} key={index}>
+                         <SwingTrade class="swingTrade"/>
+                       </TabPane>
+              })}
+          </Tabs>
           <a href="#" onClick={this.addTrade}>Add</a>
         </Layout>
-      </div>
     )
   }
 
