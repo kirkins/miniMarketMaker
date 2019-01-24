@@ -2,9 +2,13 @@ import React, { Component } from 'react';
 import Binance from 'binance-api-node';
 import _ from 'lodash';
 import './SwingTrade.css';
-import { Form, Switch, AutoComplete, Input, Button, Timeline, message, Row, Col} from 'antd';
+import { Layout, Form, Switch, AutoComplete, Input, Button, Timeline, message, Row, Col} from 'antd';
 let eventLoop
 let binance
+
+const {
+  Header, Footer, Sider, Content,
+} = Layout;
 
 class SwingTrade extends Component {
 
@@ -150,62 +154,68 @@ class SwingTrade extends Component {
 
   render() {
     return (
-      <div>
-        <Form class="trade-container" style={{ width: 300 }}>
-          <p>symbol: { this.state.selectedPair }</p>
-          <p>price: <span className={this.state.priceColor}>{ this.state.marketPrice }</span></p>
-          <Form.Item label="trading pair">
-            <AutoComplete
-              dataSource={this.state.filteredPairs}
-              placeholder='trading pair'
-              onSelect={this.onSelectPair}
-              onSearch={this.onFilterPair}
-            />
-          </Form.Item>
-          <Form.Item label="quantity">
-            <Input
-              value={this.state.quantity}
-              onChange={this.changeQuantity}
-              placeholder='Quantity'
-            />
-          </Form.Item>
-          <Form.Item label="buy price">
-            <Input
-              value={this.state.buyPrice}
-              onChange={this.changeBuyPrice}
-              placeholder='Buy price'
-            />
-          </Form.Item>
-          <Form.Item label="sell price">
-            <Input
-              value={this.state.sellPrice}
-              onChange={this.changeSellPrice}
-              placeholder='Sell price'
-            />
-          </Form.Item>
-          <Form.Item label="start on buy/sell">
-            <Switch defaultChecked
-              checked={this.state.buy}
-              onChange={this.changeBuy}
-            />
-          </Form.Item>
-          <Button
-            type='primary'
-            onClick={this.makeTrade}
-          >
-            {this.state.buy ? "Start with Buy" : "Start with Sell"}
-          </Button>
-        </Form>
-        <Timeline>
-          {
-            this.state.orderHistory.map((order) => {
-              return <Timeline.Item color={order.side==="BUY" ? "green" : "red"}>
-                       Order #{order.orderId} {order.side} {order.symbol} {order.origQty} for {order.price}
-                     </Timeline.Item>
-            })
-          }
-        </Timeline>
-      </div>
+      <Content id="trades-page">
+        <Row>
+         <Col span={5}>
+            <Form class="trade-container" style={{ width: 300 }}>
+              <p>symbol: { this.state.selectedPair }</p>
+              <p>price: <span className={this.state.priceColor}>{ this.state.marketPrice }</span></p>
+              <Form.Item label="trading pair">
+                <AutoComplete
+                  dataSource={this.state.filteredPairs}
+                  placeholder='trading pair'
+                  onSelect={this.onSelectPair}
+                  onSearch={this.onFilterPair}
+                />
+              </Form.Item>
+              <Form.Item label="quantity">
+                <Input
+                  value={this.state.quantity}
+                  onChange={this.changeQuantity}
+                  placeholder='Quantity'
+                />
+              </Form.Item>
+              <Form.Item label="buy price">
+                <Input
+                  value={this.state.buyPrice}
+                  onChange={this.changeBuyPrice}
+                  placeholder='Buy price'
+                />
+              </Form.Item>
+              <Form.Item label="sell price">
+                <Input
+                  value={this.state.sellPrice}
+                  onChange={this.changeSellPrice}
+                  placeholder='Sell price'
+                />
+              </Form.Item>
+              <Form.Item label="start on buy/sell">
+                <Switch defaultChecked
+                  checked={this.state.buy}
+                  onChange={this.changeBuy}
+                />
+              </Form.Item>
+              <Button
+                type='primary'
+                onClick={this.makeTrade}
+              >
+                {this.state.buy ? "Start with Buy" : "Start with Sell"}
+              </Button>
+            </Form>
+          </Col>
+          <Col span={9}>
+            <Timeline>
+              {
+                this.state.orderHistory.map((order) => {
+                  return <Timeline.Item color={order.side==="BUY" ? "green" : "red"}>
+                           Order #{order.orderId} {order.side} {order.symbol} {order.origQty} for {order.price}
+                         </Timeline.Item>
+                })
+              }
+            </Timeline>
+          </Col>
+        </Row>
+      </Content>
     );
   }
 }
