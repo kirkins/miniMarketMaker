@@ -155,8 +155,8 @@ class SwingTrade extends Component {
   render() {
     return (
       <Content id="trades-page">
-        <Row>
-         <Col span={5}>
+        <Row gutter={16}>
+         <Col span={6}>
             <Form class="trade-container" style={{ width: 300 }}>
               <p>symbol: { this.state.selectedPair }</p>
               <p>price: <span className={this.state.priceColor}>{ this.state.marketPrice }</span></p>
@@ -204,7 +204,7 @@ class SwingTrade extends Component {
             </Form>
           </Col>
           <Col span={9}>
-            <Timeline>
+            <Timeline class="trade-timeline">
               {
                 this.state.orderHistory.map((order) => {
                   return <Timeline.Item color={order.side==="BUY" ? "green" : "red"}>
