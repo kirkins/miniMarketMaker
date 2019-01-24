@@ -108,7 +108,7 @@ class SwingTrade extends Component {
       quantity: this.state.quantity,
       price: price,
     }).then(results => {
-      message.success(JSON.stringify(results))
+      console.log(JSON.stringify(results))
       let newOrdersArray = this.state.orderHistory
       newOrdersArray.push(results)
       this.setState({orderHistory: newOrdersArray, lastOrder: results.orderId})
