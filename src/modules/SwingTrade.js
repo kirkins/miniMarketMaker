@@ -75,7 +75,7 @@ class SwingTrade extends Component {
   changeSellPrice = e =>
     this.setState({
       sellPrice: e.target.value,
-	  spread: e.target.value / this.state.buyPrice * 100 - 100
+      spread: e.target.value / this.state.buyPrice * 100 - 100
   });
 
   changeSpread = e =>
