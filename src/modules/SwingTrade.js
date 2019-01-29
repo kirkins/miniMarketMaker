@@ -20,6 +20,7 @@ class SwingTrade extends Component {
     marketPrice: 0,
     buyPrice: 0,
     sellPrice: 0,
+	spread: 0,
     quantity: 100,
     buy: false,
     lastOrder: "",
@@ -34,6 +35,7 @@ class SwingTrade extends Component {
     this.changeBuy = this.changeBuy.bind(this);
     this.changeBuyPrice = this.changeBuyPrice.bind(this);
     this.changeSellPrice = this.changeSellPrice.bind(this);
+	this.changeSpread = this.changeSpread.bind(this);
     this.checkOrder = this.checkOrder.bind(this);
     this.checkPrice = this.checkPrice.bind(this);
   }
@@ -75,9 +77,16 @@ class SwingTrade extends Component {
       sellPrice: e.target.value,
   });
 
+  changeSpread = e =>
+    this.setState({
+      spread: e.target.value,
+	  sellPrice: this.state.buyPrice * (1 + e.target.value / 100)
+  });
+
   changeBuyPrice = e =>
     this.setState({
       buyPrice: e.target.value,
+	  sellPrice: this.state.buyPrice * (1 + e.target.value / 100)
   });
 
   changeQuantity = e =>
@@ -175,7 +184,14 @@ class SwingTrade extends Component {
                   placeholder='Buy price'
                 />
               </Form.Item>
-              <Form.Item label="sell price">
+			  <Form.Item label="spread">
+                <Input
+                  value={this.state.spread}
+                  onChange={this.changeSpread}
+                  placeholder='Spread'
+                />
+              </Form.Item>
+			  <Form.Item label="sell price">
                 <Input
                   value={this.state.sellPrice}
                   onChange={this.changeSellPrice}
