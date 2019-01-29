@@ -39,23 +39,16 @@ class SwingTrade extends Component {
   }
 
   componentWillMount() {
-    if(!localStorage.getItem("binance-key") 
-        || localStorage.getItem === ""
-        || !localStorage.getItem("binance-secret")
-        || localStorage.getItem === "") {
-      this.props.history.push('/settings')
-    } else {
-      const APIKEY = localStorage.getItem("binance-key");
-      const APISECRET = localStorage.getItem("binance-secret");
-      binance = Binance({apiKey: APIKEY, apiSecret: APISECRET, test: true})
-      let comp = this
-      binance.exchangeInfo().then(results => {
-        var symbols = _.map(results.symbols, 'symbol')
-        comp.setState({pairs: symbols, filteredPairs: symbols})
-      }).catch(function (error) {
-        console.log(error)
-      })
-    }
+    const APIKEY = localStorage.getItem("binance-key");
+    const APISECRET = localStorage.getItem("binance-secret");
+    binance = Binance({apiKey: APIKEY, apiSecret: APISECRET, test: true})
+    let comp = this
+    binance.exchangeInfo().then(results => {
+      var symbols = _.map(results.symbols, 'symbol')
+      comp.setState({pairs: symbols, filteredPairs: symbols})
+    }).catch(function (error) {
+      console.log(error)
+    })
   }
 
   onFilterPair(value) {

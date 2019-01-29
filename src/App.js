@@ -13,6 +13,15 @@ class App extends Component {
     super(props);
   }
 
+  componentWillMount() {
+    if(!localStorage.getItem("binance-key")
+        || localStorage.getItem === ""
+        || !localStorage.getItem("binance-secret")
+        || localStorage.getItem === "") {
+      this.showModal();
+    }
+  }
+
   state = {
     visible: false,
     confirmLoading: false,
@@ -22,18 +31,6 @@ class App extends Component {
     this.setState({
       visible: true,
     });
-  }
-
-  handleOk = () => {
-    this.setState({
-      confirmLoading: true,
-    });
-    setTimeout(() => {
-      this.setState({
-        visible: false,
-        confirmLoading: false,
-      });
-    }, 2000);
   }
 
   handleCancel = () => {
@@ -54,11 +51,10 @@ class App extends Component {
           </Affix>
           <Layout style={{ padding: '0 24px 24px', height:"100vh"}}>
             <Modal
-              title="Title"
+              title="Settings"
               visible={this.state.visible}
-              onOk={this.handleOk}
-              confirmLoading={this.state.confirmLoading}
               onCancel={this.handleCancel}
+              onOk={this.handleCancel}
             >
               <Settings/>
             </Modal>
