@@ -20,7 +20,7 @@ class SwingTrade extends Component {
     marketPrice: 0,
     buyPrice: 0,
     sellPrice: 0,
-	spread: 0,
+    spread: 0,
     quantity: 100,
     buy: false,
     lastOrder: "",
