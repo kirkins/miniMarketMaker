@@ -35,7 +35,7 @@ class SwingTrade extends Component {
     this.changeBuy = this.changeBuy.bind(this);
     this.changeBuyPrice = this.changeBuyPrice.bind(this);
     this.changeSellPrice = this.changeSellPrice.bind(this);
-	this.changeSpread = this.changeSpread.bind(this);
+    this.changeSpread = this.changeSpread.bind(this);
     this.checkOrder = this.checkOrder.bind(this);
     this.checkPrice = this.checkPrice.bind(this);
   }
