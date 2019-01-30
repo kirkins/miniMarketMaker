@@ -52,7 +52,7 @@ class SwingTrade extends Component {
   }
 
   componentWillUnmount() {
-    clearInterval(eventLoop)
+    clearInterval(eventLoop);
   }
 
   onFilterPair(value) {
@@ -113,6 +113,7 @@ class SwingTrade extends Component {
       let newOrdersArray = this.state.orderHistory
       newOrdersArray.push(results)
       this.setState({orderHistory: newOrdersArray, lastOrder: results.orderId})
+      clearInterval(eventLoop);
       eventLoop = setInterval(function() {
         comp.checkOrder()
       }, 5000);
