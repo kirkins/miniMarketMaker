@@ -94,6 +94,10 @@ class SwingTrade extends Component {
   }
 
   makeTrade() {
+    if (this.state.buyPrice > this.state.sellPrice) {
+      message.error("Sell price must be higher than buy price");
+      return;
+    }
     let comp = this
     let side = this.state.buy ? "BUY" : "SELL"
     let price = this.state.buy ? this.state.buyPrice : this.state.sellPrice
