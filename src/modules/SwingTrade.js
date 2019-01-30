@@ -51,6 +51,10 @@ class SwingTrade extends Component {
     })
   }
 
+  componentWillUnmount() {
+    clearInterval(eventLoop)
+  }
+
   onFilterPair(value) {
     this.setState({filteredPairs: _.filter(this.state.pairs, function(pair) {
         return pair.indexOf(value.toUpperCase()) >= 0;
