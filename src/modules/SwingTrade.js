@@ -159,6 +159,7 @@ class SwingTrade extends Component {
                   placeholder='trading pair'
                   onSelect={this.onSelectPair}
                   onSearch={this.onFilterPair}
+                  disabled={this.state.lastOrder!=""}
                 />
               </Form.Item>
               <Form.Item label="quantity">
@@ -166,6 +167,7 @@ class SwingTrade extends Component {
                   value={this.state.quantity}
                   onChange={this.changeQuantity}
                   placeholder='Quantity'
+                  disabled={this.state.lastOrder!=""}
                 />
               </Form.Item>
               <Form.Item label="buy price">
@@ -173,6 +175,7 @@ class SwingTrade extends Component {
                   value={this.state.buyPrice}
                   onChange={this.changeBuyPrice}
                   placeholder='Buy price'
+                  disabled={this.state.lastOrder!=""}
                 />
               </Form.Item>
               <Form.Item label="sell price">
@@ -180,17 +183,20 @@ class SwingTrade extends Component {
                   value={this.state.sellPrice}
                   onChange={this.changeSellPrice}
                   placeholder='Sell price'
+                  disabled={this.state.lastOrder!=""}
                 />
               </Form.Item>
               <Form.Item label="start on buy/sell">
                 <Switch defaultChecked
                   checked={this.state.buy}
                   onChange={this.changeBuy}
+                  disabled={this.state.lastOrder!=""}
                 />
               </Form.Item>
               <Button
                 type='primary'
                 onClick={this.makeTrade}
+                disabled={this.state.lastOrder!=""}
               >
                 {this.state.buy ? "Start with Buy" : "Start with Sell"}
               </Button>
