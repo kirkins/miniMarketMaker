@@ -53,6 +53,10 @@ class SwingTrade extends Component {
     })
   }
 
+  componentWillUnmount() {
+    clearInterval(eventLoop);
+  }
+
   onFilterPair(value) {
     this.setState({filteredPairs: _.filter(this.state.pairs, function(pair) {
         return pair.indexOf(value.toUpperCase()) >= 0;
@@ -100,6 +104,10 @@ class SwingTrade extends Component {
   }
 
   makeTrade() {
+    if (this.state.buyPrice > this.state.sellPrice) {
+      message.error("Sell price must be higher than buy price");
+      return;
+    }
     let comp = this
     let side = this.state.buy ? "BUY" : "SELL"
     let price = this.state.buy ? this.state.buyPrice : this.state.sellPrice
@@ -115,6 +123,7 @@ class SwingTrade extends Component {
       let newOrdersArray = this.state.orderHistory
       newOrdersArray.push(results)
       this.setState({orderHistory: newOrdersArray, lastOrder: results.orderId})
+      clearInterval(eventLoop);
       eventLoop = setInterval(function() {
         comp.checkOrder()
       }, 5000);
@@ -169,6 +178,7 @@ class SwingTrade extends Component {
                   placeholder='trading pair'
                   onSelect={this.onSelectPair}
                   onSearch={this.onFilterPair}
+                  disabled={this.state.lastOrder!=""}
                 />
               </Form.Item>
               <Form.Item label="quantity">
@@ -176,6 +186,7 @@ class SwingTrade extends Component {
                   value={this.state.quantity}
                   onChange={this.changeQuantity}
                   placeholder='Quantity'
+                  disabled={this.state.lastOrder!=""}
                 />
               </Form.Item>
               <Form.Item label="buy price">
@@ -183,6 +194,7 @@ class SwingTrade extends Component {
                   value={this.state.buyPrice}
                   onChange={this.changeBuyPrice}
                   placeholder='Buy price'
+                  disabled={this.state.lastOrder!=""}
                 />
               </Form.Item>
 			  <Form.Item label="spread">
@@ -197,17 +209,20 @@ class SwingTrade extends Component {
                   value={this.state.sellPrice}
                   onChange={this.changeSellPrice}
                   placeholder='Sell price'
+                  disabled={this.state.lastOrder!=""}
                 />
               </Form.Item>
               <Form.Item label="start on buy/sell">
                 <Switch defaultChecked
                   checked={this.state.buy}
                   onChange={this.changeBuy}
+                  disabled={this.state.lastOrder!=""}
                 />
               </Form.Item>
               <Button
                 type='primary'
                 onClick={this.makeTrade}
+                disabled={this.state.lastOrder!=""}
               >
                 {this.state.buy ? "Start with Buy" : "Start with Sell"}
               </Button>
