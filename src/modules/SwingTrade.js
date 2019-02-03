@@ -36,6 +36,7 @@ class SwingTrade extends Component {
     this.changeSellPrice = this.changeSellPrice.bind(this);
     this.checkOrder = this.checkOrder.bind(this);
     this.checkPrice = this.checkPrice.bind(this);
+    this.formatTime = this.formatTime.bind(this);
   }
 
   componentWillMount() {
@@ -53,6 +54,13 @@ class SwingTrade extends Component {
 
   componentWillUnmount() {
     clearInterval(eventLoop);
+  }
+
+  formatTime(s) {
+    let datetime = new Date(s);
+    let date = datetime.toLocaleDateString("en-US");
+    let time = datetime.toLocaleTimeString("en-US");
+    return date + " " + time;
   }
 
   onFilterPair(value) {
@@ -216,7 +224,7 @@ class SwingTrade extends Component {
               {
                 this.state.orderHistory.map((order) => {
                   return <Timeline.Item color={order.side==="BUY" ? "green" : "red"}>
-                           Order #{order.orderId} {order.side} {order.symbol} {order.origQty} for {order.price}
+                           Order #{order.orderId} {order.side} {order.symbol} {order.origQty} for {order.price} at { this.formatTime(order.transactTime) }
                          </Timeline.Item>
                 })
               }
