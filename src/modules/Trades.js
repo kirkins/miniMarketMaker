@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Button, Collapse, Layout, Tabs, Icon, message } from 'antd';
-import SwingTrade from "./SwingTrade"
+import SwingTrade from "./FishTrade"
 import './Trades.css';
 
 const TabPane = Tabs.TabPane;
