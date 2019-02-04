@@ -37,6 +37,7 @@ class SwingTrade extends Component {
     this.checkOrder = this.checkOrder.bind(this);
     this.checkPrice = this.checkPrice.bind(this);
     this.formatTime = this.formatTime.bind(this);
+    this.cancelOrder = this.cancelOrder.bind(this);
   }
 
   componentWillMount() {
@@ -162,6 +163,18 @@ class SwingTrade extends Component {
     }, 5000)
   }
 
+  cancelOrder() {
+    binance.cancelOrder({
+      symbol: this.state.selectedPair,
+      orderId: this.state.lastOrder,
+    }).then(results => {
+      clearInterval(eventLoop);
+      this.state.lastOrder="";
+    }).catch(function (error) {
+      message.error(JSON.stringify(error))
+    })
+  }
+
   render() {
     return (
       <Content id="trades-page">
@@ -216,6 +229,13 @@ class SwingTrade extends Component {
                 disabled={this.state.lastOrder!=""}
               >
                 {this.state.buy ? "Start with Buy" : "Start with Sell"}
+              </Button>
+              <Button
+                type='danger'
+                onClick={this.cancelOrder}
+                disabled={this.state.lastOrder==""}
+              >
+                Cancel Trade
               </Button>
             </Form>
           </Col>
