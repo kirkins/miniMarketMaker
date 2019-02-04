@@ -197,7 +197,7 @@ class SwingTrade extends Component {
                   disabled={this.state.lastOrder!=""}
                 />
               </Form.Item>
-              <Form.Item label="spread">
+              <Form.Item label="Spread %">
                 <Input
                   value={this.state.spread}
                   onChange={this.changeSpread}
