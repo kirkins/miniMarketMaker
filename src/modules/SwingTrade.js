@@ -21,6 +21,7 @@ class SwingTrade extends Component {
     buyPrice: 0,
     sellPrice: 0,
     spread: 0,
+    useSpread: false,
     quantity: 100,
     buy: false,
     lastOrder: "",
@@ -36,6 +37,7 @@ class SwingTrade extends Component {
     this.changeBuyPrice = this.changeBuyPrice.bind(this);
     this.changeSellPrice = this.changeSellPrice.bind(this);
     this.changeSpread = this.changeSpread.bind(this);
+    this.changeUseSpread = this.changeUseSpread.bind(this);
     this.checkOrder = this.checkOrder.bind(this);
     this.checkPrice = this.checkPrice.bind(this);
     this.formatTime = this.formatTime.bind(this);
@@ -89,7 +91,7 @@ class SwingTrade extends Component {
     this.setState({
       sellPrice: e.target.value,
       spread: e.target.value / this.state.buyPrice * 100 - 100
-  });
+    });
 
   changeSpread = e =>
     this.setState({
@@ -110,6 +112,10 @@ class SwingTrade extends Component {
 
   changeBuy() {
     this.setState({ buy: !this.state.buy})
+  }
+
+  changeUseSpread() {
+    this.setState({ useSpread: !this.state.useSpread})
   }
 
   makeTrade() {
@@ -218,18 +224,26 @@ class SwingTrade extends Component {
                   disabled={this.state.lastOrder!=""}
                 />
               </Form.Item>
+              { this.state.useSpread ?
               <Form.Item label="Spread %">
                 <Input
                   value={this.state.spread}
                   onChange={this.changeSpread}
                   placeholder='Spread'
                 />
-              </Form.Item>
+              </Form.Item> : '' }
               <Form.Item label="sell price">
                 <Input
                   value={this.state.sellPrice}
                   onChange={this.changeSellPrice}
                   placeholder='Sell price'
+                  disabled={this.state.lastOrder!="" || this.state.useSpread}
+                />
+              </Form.Item>
+              <Form.Item label="use spread">
+                <Switch defaultChecked
+                  checked={this.state.useSpread}
+                  onChange={this.changeUseSpread}
                   disabled={this.state.lastOrder!=""}
                 />
               </Form.Item>
