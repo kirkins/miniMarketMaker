@@ -23,3 +23,8 @@ This was a proto-type built quickly as a concept.
 End-goal was to have multiple pairs displayed as tabs on the left of the page.
 
 Not activily working on this now, use this code as you wish.
+
+
+note: Had to install libgconf on Ubuntu:
+
+    sudo apt -y install libgconf2-4
