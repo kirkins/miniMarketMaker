@@ -27,7 +27,8 @@ class Settings extends Component {
   onSave() {
     localStorage.setItem("binance-key", this.state.apiKey);
     localStorage.setItem("binance-secret", this.state.apiSecret);
-    message.success(localStorage.getItem("binance-key"));
+    message.success("Key successfully saved");
+    window.location.reload();
   }
 
   onUpdateKey = e =>
